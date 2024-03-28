@@ -44,6 +44,7 @@ const CustomInput: React.FC<{
           }}
         >
           <InputBase
+            autoComplete="on"
             placeholder={placeholder}
             fullWidth
             sx={{

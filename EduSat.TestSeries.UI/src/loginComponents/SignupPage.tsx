@@ -4,6 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import CustomInput from "./CustomInput";
 import { register } from "../service/loginService";
+import { DataContext } from "../Contexts/DataContext";
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const SignupPage: React.FC = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  const { setIsLoggedIn } = React.useContext(DataContext);
+
   const tryRegister = async () => {
     if (password !== confirmPassword) {
       console.log("Passwords do not match");
@@ -20,6 +23,8 @@ const SignupPage: React.FC = () => {
     const response = await register(email, password);
     if (response?.status === 200) {
       navigate("/dashboard");
+      setIsLoggedIn(true);
+      window.localStorage.setItem("isLoggedIn", "true");
     } else {
       console.log("Register failed");
     }
@@ -154,7 +159,8 @@ const SignupPage: React.FC = () => {
             </Button>
           </Box>
           <Button
-            onClick={tryRegister}
+            onSubmit={tryRegister}
+            // onClick={tryRegister}
             variant="contained"
             fullWidth
             sx={{ mt: 4, boxShadow: `0 0 20px ${colors.green[500]}` }}

@@ -1,10 +1,16 @@
 import { Box, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import MainLayout from "../layouts/LoginLayout";
-import SigninPage from "./SigninPage";
-import TitleBox from "./TitleBox";
+import SignupPage from "./SignupPage";
+import { DataContext } from "../Contexts/DataContext";
 import React from "react";
 
 const LoginComponent: React.FC = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn } = React.useContext(DataContext);
+  if (isLoggedIn) {
+    navigate("/dashboard");
+  }
   return (
     <MainLayout>
       <Box
@@ -18,10 +24,8 @@ const LoginComponent: React.FC = () => {
           },
         }}
       >
-        <Grid container height="90vh">
-          <SigninPage />
-
-          <TitleBox />
+        <Grid container height="90vh" width="120vw">
+          <SignupPage />
         </Grid>
       </Box>
     </MainLayout>
