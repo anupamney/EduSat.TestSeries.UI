@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { enqueueSnackbar } from "notistack";
 
 export const login = async (email: string, password: string) => {
   const data = {
@@ -24,10 +25,11 @@ export const login = async (email: string, password: string) => {
       response.data.refreshToken
     );
     return response;
-    // Handle success response
   } catch (error) {
-    console.error("Registration failed:", error);
-    // Handle error response
+    const axiosError = error as AxiosError;
+    axiosError?.response?.data?.errors?.map((error: string) => {
+      enqueueSnackbar(error, { variant: "error" });
+    });
   }
 };
 export const register = async (email: string, password: string) => {
@@ -48,16 +50,16 @@ export const register = async (email: string, password: string) => {
         },
       }
     );
-    console.log("Registration successful:", response.data);
     window.sessionStorage.setItem("authToken", response.data.token);
     window.sessionStorage.setItem(
       "refeshAuthToken",
       response.data.refreshToken
     );
     return response;
-    // Handle success response
   } catch (error) {
-    console.error("Registration failed:", error);
-    // Handle error response
+    const axiosError = error as AxiosError;
+    axiosError?.response?.data?.errors?.map((error: string) => {
+      enqueueSnackbar(error, { variant: "error" });
+    });
   }
 };

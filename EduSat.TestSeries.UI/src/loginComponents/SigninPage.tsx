@@ -5,9 +5,12 @@ import { useNavigate } from "react-router";
 import CustomInput from "./CustomInput";
 import { login } from "../service/loginService";
 import { DataContext } from "../Contexts/DataContext";
+import { passwordValidator, emailValidator } from "../utils/inputValidations";
+import { useSnackbar } from "notistack";
 
 const SigninPage: React.FC = () => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -15,14 +18,24 @@ const SigninPage: React.FC = () => {
 
   const tryLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let errorflag = false;
+    if (passwordValidator(password) !== "") {
+      enqueueSnackbar(passwordValidator(password), { variant: "error" });
+      errorflag = true;
+    }
+    if (emailValidator(email) !== "") {
+      enqueueSnackbar(emailValidator(email), { variant: "error" });
+      errorflag = true;
+    }
+    if (errorflag) {
+      return;
+    }
 
     const response = await login(email, password);
-    if (response?.status === 200) {
+    if (response?.data.success) {
       navigate("/dashboard");
       setIsLoggedIn(true);
       window.localStorage.setItem("isLoggedIn", "true");
-    } else {
-      console.log("Login failed");
     }
   };
 
@@ -36,6 +49,7 @@ const SigninPage: React.FC = () => {
         xl={6}
         minHeight={550}
         width="40vw !important"
+        height="100%"
         sx={{
           boxShadow: {
             xs: "",
@@ -111,8 +125,8 @@ const SigninPage: React.FC = () => {
 
             {/* INPUTS */}
             <CustomInput
-              label="Login"
-              placeholder="Enter your login..."
+              label="Email"
+              placeholder="Enter your Email..."
               isIconActive={false}
               setData={setEmail}
             />
@@ -156,7 +170,6 @@ const SigninPage: React.FC = () => {
             </Box>
             <Button
               type="submit"
-              // onClick={tryLogin}
               variant="contained"
               fullWidth
               sx={{ mt: 4, boxShadow: `0 0 20px ${colors.green[500]}` }}
