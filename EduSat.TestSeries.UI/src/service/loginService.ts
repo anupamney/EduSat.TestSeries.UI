@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
+import { baseURL } from "../utils/constants";
 
 export const login = async (email: string, password: string) => {
   const data = {
@@ -8,16 +9,12 @@ export const login = async (email: string, password: string) => {
   };
 
   try {
-    const response = await axios.post(
-      "https://localhost:32768/api/Auth/login",
-      data,
-      {
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(baseURL + "Auth/login", data, {
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    });
     console.log("login successful:", response.data);
     window.sessionStorage.setItem("authToken", response.data.token);
     window.sessionStorage.setItem(
@@ -40,16 +37,12 @@ export const register = async (email: string, password: string) => {
   };
 
   try {
-    const response = await axios.post(
-      "https://localhost:32768/api/Auth/register",
-      data,
-      {
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(baseURL + "Auth/register", data, {
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    });
     window.sessionStorage.setItem("authToken", response.data.token);
     window.sessionStorage.setItem(
       "refeshAuthToken",
