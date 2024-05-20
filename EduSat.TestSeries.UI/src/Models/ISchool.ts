@@ -1,11 +1,12 @@
 export interface ISchool {
-  Name: string;
-  AddressLine1: string;
-  AddressLine2: string;
-  City: string;
-  District: string;
-  State: string;
-  Pin: string;
-  Email: string;
-  StaffId: string;
+  id: string;
+  name: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  district: string;
+  state: string;
+  pin: string;
+  email: string;
+  staffId: string;
 }

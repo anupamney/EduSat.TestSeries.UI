@@ -6,15 +6,16 @@ import { useNavigate } from "react-router-dom";
 const AddSchool: React.FC = () => {
   const navigate = useNavigate();
   const [school, setSchool] = useState<ISchool>({
-    Name: "",
-    AddressLine1: "",
-    AddressLine2: "",
-    City: "",
-    District: "",
-    State: "",
-    Pin: "",
-    Email: "",
-    StaffId: "",
+    id: "",
+    name: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    district: "",
+    state: "",
+    pin: "",
+    email: "",
+    staffId: "",
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -39,7 +40,7 @@ const AddSchool: React.FC = () => {
           type="text"
           id="name"
           name="Name"
-          value={school.Name}
+          value={school.name}
           onChange={handleChange}
         />
       </div>
@@ -49,7 +50,7 @@ const AddSchool: React.FC = () => {
           type="text"
           id="addressLine1"
           name="AddressLine1"
-          value={school.AddressLine1}
+          value={school.addressLine1}
           onChange={handleChange}
         />
       </div>
@@ -59,7 +60,7 @@ const AddSchool: React.FC = () => {
           type="text"
           id="addressLine2"
           name="AddressLine2"
-          value={school.AddressLine2}
+          value={school.addressLine2}
           onChange={handleChange}
         />
       </div>
@@ -69,7 +70,7 @@ const AddSchool: React.FC = () => {
           type="text"
           id="City"
           name="City"
-          value={school.City}
+          value={school.city}
           onChange={handleChange}
         />
       </div>
@@ -79,7 +80,7 @@ const AddSchool: React.FC = () => {
           type="text"
           id="district"
           name="District"
-          value={school.District}
+          value={school.district}
           onChange={handleChange}
         />
       </div>
@@ -89,7 +90,7 @@ const AddSchool: React.FC = () => {
           type="text"
           id="state"
           name="State"
-          value={school.State}
+          value={school.state}
           onChange={handleChange}
         />
       </div>
@@ -99,7 +100,7 @@ const AddSchool: React.FC = () => {
           type="text"
           id="pincode"
           name="Pin"
-          value={school.Pin}
+          value={school.pin}
           onChange={handleChange}
         />
       </div>
@@ -109,7 +110,7 @@ const AddSchool: React.FC = () => {
           type="email"
           id="email"
           name="Email"
-          value={school.Email}
+          value={school.email}
           onChange={handleChange}
         />
       </div>

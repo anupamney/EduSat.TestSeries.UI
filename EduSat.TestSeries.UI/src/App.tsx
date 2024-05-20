@@ -6,24 +6,26 @@ import { useEffect } from "react";
 import AddSchool from "./Components/AddSchool";
 import Navbar from "./layouts/NavBar";
 import AddTeachers from "./Components/AddTeachers";
+import AddScholarshipDetails from "./Components/AddScholarshipDetails";
+import { isLoggedIn } from "./utils/utils";
 
 const App: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isLoggedIn = window.localStorage.getItem("isLoggedIn") === "true";
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       const currURL = window.location.pathname;
       if (currURL === "/" || currURL === "/login" || currURL === "/register") {
         navigate("/dashboard");
       } else navigate(currURL);
-    }
+    } else navigate("/");
   }, [navigate]);
 
   return (
     <>
-      <Navbar />
+      {isLoggedIn() && <Navbar />}
       <Routes>
+        <Route path={"/add-scholarship"} element={<AddScholarshipDetails />} />
         <Route path={"/add-teachers"} element={<AddTeachers />} />
         <Route path={"/add-school"} element={<AddSchool />} />
         <Route path={"/dashboard/*"} element={<DashboardComponent />} />

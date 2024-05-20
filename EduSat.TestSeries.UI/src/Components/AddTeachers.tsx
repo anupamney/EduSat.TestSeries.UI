@@ -1,9 +1,18 @@
-import { useEffect } from "react";
+import { ITeacher } from "../Models/ITeacher";
+import { getTeachers } from "../service/dataService";
+// import { AxiosResponse } from "axios";
 
 const AddTeachers: React.FC = () => {
-  useEffect(() => {}, []);
+  const fetchteachers = async () => {
+    const response = await getTeachers();
+    if (response) {
+      const teachers: ITeacher[] = response.data;
+      console.log(teachers);
+    }
+  };
   return (
     <div>
+      <button onClick={fetchteachers}>Click me</button>
       <h1>Add Teachers</h1>
     </div>
   );
