@@ -1,19 +1,128 @@
+import {
+  FormControl,
+  FormLabel,
+  TextField,
+  Button,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { ITeacher } from "../Models/ITeacher";
-import { getTeachers } from "../service/dataService";
+import { addTeacher, getTeachers } from "../service/dataService";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import { AxiosResponse } from "axios";
 
 const AddTeachers: React.FC = () => {
+  const navigate = useNavigate();
+  const [teacher, setTeacher] = useState<ITeacher>({
+    id: "0",
+    firstName: "",
+    lastName: "",
+    mobile: "",
+    email: "",
+  });
+
+  const [teachers, setTeachers] = useState([] as ITeacher[]);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTeacher({ ...teacher, [event.target.name]: event.target.value });
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    setTeacher({ ...teacher, [event.target.name]: event.target.value });
+  };
+
   const fetchteachers = async () => {
     const response = await getTeachers();
     if (response) {
       const teachers: ITeacher[] = response.data;
-      console.log(teachers);
+      setTeachers(teachers);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(teacher);
+    const success = await addTeacher(teacher);
+    if (success) {
+      alert("Teacher added successfully");
+      navigate("/add-scholarship");
+    } else {
+      alert("Failed to add teacher");
     }
   };
   return (
     <div>
-      <button onClick={fetchteachers}>Click me</button>
-      <h1>Add Teachers</h1>
+      <Button onClick={fetchteachers} disabled={teachers.length > 0}>
+        Get the list of registered teachers
+      </Button>
+      <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="teacher">Teachers</InputLabel>
+        <Select name="id" onChange={handleSelectChange} value={teacher.id}>
+          {teachers.map((teacher) => (
+            <MenuItem key={teacher.id} value={teacher.id}>
+              {teacher.firstName} {teacher.lastName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <form onSubmit={handleSubmit}>
+        <h2>Add or Select Teacher</h2>
+        <FormControl fullWidth margin="normal">
+          <FormLabel>First Name</FormLabel>
+          <TextField
+            label="First Name"
+            id="firstName"
+            name="firstName"
+            value={teacher.firstName}
+            onChange={handleChange}
+            required
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <FormLabel>Last Name</FormLabel>
+          <TextField
+            label="Last Name"
+            id="lastName"
+            name="lastName"
+            value={teacher.lastName}
+            onChange={handleChange}
+            required
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <FormLabel>Mobile Number</FormLabel>
+          <TextField
+            label="Mobile Number"
+            id="mobile"
+            name="mobile"
+            value={teacher.mobile}
+            onChange={handleChange}
+            type="tel" // Set input type for phone numbers
+          />
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <FormLabel>Email</FormLabel>
+          <TextField
+            label="Email"
+            id="email"
+            name="email"
+            value={teacher.email}
+            onChange={handleChange}
+            type="email"
+            required
+          />
+        </FormControl>
+
+        <Button type="submit" variant="contained" color="primary">
+          Add Teacher
+        </Button>
+      </form>
     </div>
   );
 };

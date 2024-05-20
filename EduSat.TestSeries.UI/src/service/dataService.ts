@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { ISchool } from "../Models/ISchool";
 import { baseURL } from "../utils/constants";
 import { IScholarshipDetails } from "../Models/IScholarshipDetails";
+import { ITeacher } from "../Models/ITeacher";
 
 export const setDefaultHeaders = (token: string | null | undefined) => {
   axios.defaults.headers["Authorization"] = "Bearer " + token;
@@ -75,6 +76,22 @@ export const getTeachers = async () => {
   setAuthHeader();
   try {
     const response = await axios.get(baseURL + "Teachers", {
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    console.log(axiosError);
+  }
+};
+
+export const addTeacher = async (teacher: ITeacher) => {
+  setAuthHeader();
+  try {
+    const response = await axios.post(baseURL + "Teachers", teacher, {
       headers: {
         Accept: "*/*",
         "Content-Type": "application/json",
