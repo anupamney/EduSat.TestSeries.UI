@@ -12,10 +12,12 @@ import { ITeacher } from "../Models/ITeacher";
 import { addTeacher, getTeachers } from "../service/dataService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 // import { AxiosResponse } from "axios";
 
 const AddTeachers: React.FC = () => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [teacher, setTeacher] = useState<ITeacher>({
     id: "0",
     firstName: "",
@@ -46,10 +48,10 @@ const AddTeachers: React.FC = () => {
     console.log(teacher);
     const success = await addTeacher(teacher);
     if (success) {
-      alert("Teacher added successfully");
+      enqueueSnackbar("Teacher added successfully", { variant: "success" });
       navigate("/add-scholarship");
     } else {
-      alert("Failed to add teacher");
+      enqueueSnackbar("Failed to add teacher", { variant: "error" });
     }
   };
   return (

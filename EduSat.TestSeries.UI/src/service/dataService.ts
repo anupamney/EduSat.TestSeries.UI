@@ -3,6 +3,7 @@ import { ISchool } from "../Models/ISchool";
 import { baseURL } from "../utils/constants";
 import { IScholarshipDetails } from "../Models/IScholarshipDetails";
 import { ITeacher } from "../Models/ITeacher";
+import { IPaymentDetails } from "../Models/IPaymentDetails";
 
 export const setDefaultHeaders = (token: string | null | undefined) => {
   axios.defaults.headers["Authorization"] = "Bearer " + token;
@@ -135,6 +136,22 @@ export const addScholarshipDetails = async (
         },
       }
     );
+    return response;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    console.log(axiosError);
+  }
+};
+
+export const addPaymentDetails = async (paymentDetails: IPaymentDetails) => {
+  setAuthHeader();
+  try {
+    const response = await axios.post(baseURL + "Payment", paymentDetails, {
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    });
     return response;
   } catch (error) {
     const axiosError = error as AxiosError;

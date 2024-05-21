@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IScholarshipDetails } from "../Models/IScholarshipDetails";
 import {
+  addPaymentDetails,
   addScholarshipDetails,
   getClasses,
   getSchools,
@@ -12,7 +13,19 @@ import MenuItem from "@mui/material/MenuItem";
 import { Button, FormControl, InputLabel, TextField } from "@mui/material";
 import { ISchool } from "../Models/ISchool";
 import { IClass } from "../Models/IClass";
+import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
+import { IPaymentDetails } from "../Models/IPaymentDetails";
 const AddScholarshipDetails = () => {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const [paymentDet, setPaymentDetails] = useState<IPaymentDetails>({
+    id: 0,
+    scholarshipId: 0,
+    totalAmount: 0,
+    amountPaid: 0,
+    paymentStatus: false,
+  });
   const [scholarshipDetails, setScholarshipDetails] =
     useState<IScholarshipDetails>({
       Id: "0",
@@ -26,6 +39,7 @@ const AddScholarshipDetails = () => {
   const [teachers, setTeachers] = useState([] as ITeacher[]);
   const [schools, setSchools] = useState([] as ISchool[]);
   const [classes, setClasses] = useState([] as IClass[]);
+  const [sdAdded, setSdAdded] = useState(false);
 
   const fetchClasses = async () => {
     const response = await getClasses();
@@ -58,18 +72,45 @@ const AddScholarshipDetails = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(scholarshipDetails);
-    console.log(schools);
-    addScholarshipDetails(scholarshipDetails);
+    const response = await addScholarshipDetails(scholarshipDetails);
+    if (response && response.data) {
+      const success: string = response.data; // assuming the data you need is directly in response.data
+      enqueueSnackbar("Scholarship details added successfully", {
+        variant: "success",
+      });
+      setPaymentDetails({
+        ...paymentDet,
+        scholarshipId: parseInt(success),
+      });
+      setSdAdded(true);
+    } else {
+      enqueueSnackbar("Failed to add scholarship details", {
+        variant: "error",
+      });
+    }
+  };
+  const handleSubmitAfter = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const success = addPaymentDetails(paymentDet);
+    if (await success) {
+      enqueueSnackbar("payment details added successfully", {
+        variant: "success",
+      });
+      navigate("/school-list");
+    } else {
+      enqueueSnackbar("Failed to add payment details", {
+        variant: "error",
+      });
+    }
   };
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <h1>Add Scholarship Details</h1>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={sdAdded ? handleSubmitAfter : handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <Button onClick={fetchteachers} disabled={teachers.length > 0}>
@@ -160,7 +201,58 @@ const AddScholarshipDetails = () => {
             }
           />
         </FormControl>
-
+        {sdAdded && (
+          <>
+            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+              <TextField
+                required
+                id="outlined-disabled"
+                label="Total Amount"
+                defaultValue={paymentDet.totalAmount}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPaymentDetails({
+                    ...paymentDet,
+                    totalAmount: parseInt(e.target.value),
+                  })
+                }
+              />
+            </FormControl>
+            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+              <TextField
+                required
+                id="outlined-disabled"
+                label="Amount Paid"
+                defaultValue={paymentDet.amountPaid}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPaymentDetails({
+                    ...paymentDet,
+                    amountPaid: parseInt(e.target.value),
+                  })
+                }
+              />
+            </FormControl>
+            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="paymentStatus">Payment Status</InputLabel>
+              <Select
+                name="paymentStatus"
+                onChange={(e: SelectChangeEvent) =>
+                  setPaymentDetails({
+                    ...paymentDet,
+                    paymentStatus: e.target.value === "1" ? true : false,
+                  })
+                }
+                value={paymentDet.paymentStatus ? "1" : "0"}
+              >
+                <MenuItem key={1} value={"1"}>
+                  Paid
+                </MenuItem>
+                <MenuItem key={2} value={"0"}>
+                  Unpaid
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </>
+        )}
         <Button type="submit" variant="contained" color="primary">
           Submit
         </Button>

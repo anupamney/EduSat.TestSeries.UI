@@ -3,9 +3,11 @@ import { addSchool } from "../service/dataService";
 import { ISchool } from "../Models/ISchool";
 import { useNavigate } from "react-router-dom";
 import { FormControl, TextField, Button } from "@mui/material";
+import { useSnackbar } from "notistack";
 
 const AddSchool: React.FC = () => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [school, setSchool] = useState<ISchool>({
     id: "0",
     name: "",
@@ -27,9 +29,11 @@ const AddSchool: React.FC = () => {
     event.preventDefault();
     const success = await addSchool(school);
     if (success) {
-      alert("School added successfully");
+      enqueueSnackbar("School added successfully", { variant: "success" });
       navigate("/add-teachers");
-    } else alert("Failed to add school");
+    } else {
+      enqueueSnackbar("Failed to add school", { variant: "error" });
+    }
   };
 
   return (
