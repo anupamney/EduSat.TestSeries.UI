@@ -8,6 +8,7 @@ import Navbar from "./layouts/NavBar";
 import AddTeachers from "./Components/AddTeachers";
 import AddScholarshipDetails from "./Components/AddScholarshipDetails";
 import { isLoggedIn } from "./utils/utils";
+import SchoolList from "./Components/SchoolsList";
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const App: React.FC = () => {
         <Route path={"/add-scholarship"} element={<AddScholarshipDetails />} />
         <Route path={"/add-teachers"} element={<AddTeachers />} />
         <Route path={"/add-school"} element={<AddSchool />} />
+        <Route path={"/schools"} element={<SchoolList />} />
         <Route path={"/dashboard/*"} element={<DashboardComponent />} />
         <Route path={"/" || "/login"} element={<LoginComponent />} />
         <Route path={"/register"} element={<RegisterComponent />} />

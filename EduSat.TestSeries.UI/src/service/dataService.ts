@@ -158,3 +158,19 @@ export const addPaymentDetails = async (paymentDetails: IPaymentDetails) => {
     console.log(axiosError);
   }
 };
+
+export const getSchoolList = async () => {
+  setAuthHeader();
+  try {
+    const response = await axios.get(baseURL + "Reports", {
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    console.log(axiosError);
+  }
+};

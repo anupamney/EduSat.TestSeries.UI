@@ -98,7 +98,7 @@ const AddScholarshipDetails = () => {
       enqueueSnackbar("payment details added successfully", {
         variant: "success",
       });
-      navigate("/school-list");
+      navigate("/schools");
     } else {
       enqueueSnackbar("Failed to add payment details", {
         variant: "error",
