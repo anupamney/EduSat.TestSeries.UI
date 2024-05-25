@@ -10,11 +10,9 @@ export const setDefaultHeaders = (token: string | null | undefined) => {
 };
 
 export const setAuthHeader = async () => {
-  if (!axios.defaults.headers["Authorization"]) {
-    const token = await fetchAuthToken();
+  const token = await fetchAuthToken();
 
-    setDefaultHeaders(token);
-  }
+  setDefaultHeaders(token);
 };
 
 export const fetchAuthToken = async () => {

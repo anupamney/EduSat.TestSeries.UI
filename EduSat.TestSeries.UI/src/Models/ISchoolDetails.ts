@@ -7,4 +7,7 @@ export interface ISchoolDetails {
   totalPayment: number;
   totalPaymentReceived: number;
   paymentStatus: boolean;
+  academicYear: string;
+  district: string;
+  className: string;
 }
