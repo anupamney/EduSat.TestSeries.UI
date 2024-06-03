@@ -4,6 +4,7 @@ import { baseURL } from "../utils/constants";
 import { IScholarshipDetails } from "../Models/IScholarshipDetails";
 import { ITeacher } from "../Models/ITeacher";
 import { IPaymentDetails } from "../Models/IPaymentDetails";
+import { IMessageDetails } from "../Models/IMessageDetails";
 
 export const setDefaultHeaders = (token: string | null | undefined) => {
   axios.defaults.headers["Authorization"] = "Bearer " + token;
@@ -166,6 +167,26 @@ export const getSchoolList = async () => {
         "Content-Type": "application/json",
       },
     });
+    return response;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    console.log(axiosError);
+  }
+};
+
+export const notify = async (messageDetails: IMessageDetails) => {
+  setAuthHeader();
+  try {
+    const response = await axios.post(
+      baseURL + "Notification",
+      messageDetails,
+      {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return response;
   } catch (error) {
     const axiosError = error as AxiosError;

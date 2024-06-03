@@ -14,12 +14,12 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const currURL = window.location.pathname;
     if (isLoggedIn()) {
-      const currURL = window.location.pathname;
       if (currURL === "/" || currURL === "/login" || currURL === "/register") {
         navigate("/dashboard");
       } else navigate(currURL);
-    } else navigate("/");
+    } else navigate(currURL);
   }, [navigate]);
 
   return (

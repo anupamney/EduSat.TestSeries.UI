@@ -1,4 +1,5 @@
 export interface ISchoolDetails {
+  id: number;
   schoolName: string;
   srn: number;
   teacherName: string;

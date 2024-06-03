@@ -1,22 +1,72 @@
 import React, { useEffect, useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   TextField,
   Select,
   MenuItem,
-  Checkbox,
   InputLabel,
+  Box,
+  Button,
+  Menu,
 } from "@mui/material";
+import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
 import { ISchoolDetails } from "../Models/ISchoolDetails";
+import NotificationPopUp from "./Notification/NotificationPopUp";
 interface SchoolListProps {
   schoolList: ISchoolDetails[];
 }
+const columns: GridColDef<ISchoolDetails>[] = [
+  { field: "schoolName", headerName: "School Name", width: 250 },
+  {
+    field: "srn",
+    headerName: "SRN",
+    width: 90,
+  },
+  {
+    field: "teacherName",
+    headerName: "Teacher Name",
+    width: 150,
+  },
+  {
+    field: "teacherEmail",
+    headerName: "Teacher Email",
+    width: 150,
+  },
+  {
+    field: "totalStudents",
+    headerName: "Total Students",
+    width: 150,
+  },
+  {
+    field: "totalPayment",
+    headerName: "Total Payment",
+    width: 250,
+  },
+  {
+    field: "totalPaymentReceived",
+    headerName: "Total Payment Received",
+    width: 250,
+  },
+  {
+    field: "paymentStatus",
+    headerName: "Payment Status",
+    width: 250,
+  },
+  {
+    field: "academicYear",
+    headerName: "Academic Year",
+    width: 150,
+  },
+  {
+    field: "district",
+    headerName: "District",
+    width: 150,
+  },
+  {
+    field: "className",
+    headerName: "Class Name",
+    width: 150,
+  },
+];
 const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
   const [filteredData, setFilteredData] = useState(schoolList || []);
   const [search, setSearch] = useState("");
@@ -24,7 +74,22 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
   const [academicYear, setAcademicYear] = useState("All");
   const [paymentStatus, setPaymentStatus] = useState("All");
   const [classname, setClassname] = useState("All");
-
+  const [selectedSchoolsEmail, setSelectedSchoolsEmail] = useState<string[]>(
+    []
+  );
+  const [notiOpen, setNotiOpen] = useState(false);
+  const [notiType, setNotiType] = useState<string>("");
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const onNotiClose = () => {
+    setNotiOpen(false);
+  };
   useEffect(() => {
     handleFilter();
   }, [search, district, academicYear, paymentStatus, classname]);
@@ -75,7 +140,14 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
 
   return (
     <div style={{ margin: "16px" }}>
-      <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          marginBottom: "10px",
+          justifyContent: "space-between",
+        }}
+      >
         <div style={{ width: "350px" }}>
           <InputLabel id="search">Search</InputLabel>
           <TextField
@@ -156,39 +228,88 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
             <MenuItem value="Unpaid">Unpaid</MenuItem>
           </Select>
         </div>
+        <div style={{ alignSelf: "center" }}>
+          <Button
+            id="basic-button"
+            size="large"
+            variant="outlined"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            Actions
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                setNotiType("EmailService");
+                setNotiOpen(true);
+                handleClose();
+              }}
+            >
+              Send Email
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setNotiType("MessageService");
+                setNotiOpen(true);
+                handleClose();
+              }}
+            >
+              Send Message
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setNotiType("WhatsappService");
+                setNotiOpen(true);
+                handleClose();
+              }}
+            >
+              Send Whatsapp
+            </MenuItem>
+          </Menu>
+        </div>
       </div>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>School Name</TableCell>
-              <TableCell>SRN</TableCell>
-              <TableCell>Contact Person</TableCell>
-              <TableCell>Contact Details</TableCell>
-              <TableCell>Students</TableCell>
-              <TableCell>Total Payment</TableCell>
-              <TableCell>Payment Received</TableCell>
-              <TableCell>Payment Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredData.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.schoolName}</TableCell>
-                <TableCell>{row.srn}</TableCell>
-                <TableCell>{row.teacherName}</TableCell>
-                <TableCell>{row.teacherEmail}</TableCell>
-                <TableCell>{row.totalStudents}</TableCell>
-                <TableCell>{row.totalPayment}</TableCell>
-                <TableCell>{row.totalPaymentReceived}</TableCell>
-                <TableCell>
-                  <Checkbox checked={row.paymentStatus} disabled />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+
+      <Box sx={{ height: "75vh", width: "98vw" }}>
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 15,
+              },
+            },
+          }}
+          onRowSelectionModelChange={(newSelection) => {
+            setSelectedSchoolsEmail(
+              newSelection.map(
+                (idx: GridRowId) =>
+                  filteredData[(idx as number) - 1].teacherEmail
+              )
+            );
+          }}
+          pageSizeOptions={[15]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
+      </Box>
+      <NotificationPopUp
+        open={notiOpen}
+        onClose={onNotiClose}
+        emails={selectedSchoolsEmail}
+        type={notiType}
+      />
     </div>
   );
 };
