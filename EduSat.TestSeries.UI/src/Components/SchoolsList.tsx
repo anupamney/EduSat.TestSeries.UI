@@ -74,9 +74,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
   const [academicYear, setAcademicYear] = useState("All");
   const [paymentStatus, setPaymentStatus] = useState("All");
   const [classname, setClassname] = useState("All");
-  const [selectedSchoolsEmail, setSelectedSchoolsEmail] = useState<string[]>(
-    []
-  );
+  const [selectedSchools, setSelectedSchools] = useState<ISchoolDetails[]>([]);
   const [notiOpen, setNotiOpen] = useState(false);
   const [notiType, setNotiType] = useState<string>("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -292,10 +290,9 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
             },
           }}
           onRowSelectionModelChange={(newSelection) => {
-            setSelectedSchoolsEmail(
+            setSelectedSchools(
               newSelection.map(
-                (idx: GridRowId) =>
-                  filteredData[(idx as number) - 1].teacherEmail
+                (idx: GridRowId) => filteredData[(idx as number) - 1]
               )
             );
           }}
@@ -307,7 +304,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
       <NotificationPopUp
         open={notiOpen}
         onClose={onNotiClose}
-        emails={selectedSchoolsEmail}
+        schools={selectedSchools}
         type={notiType}
       />
     </div>

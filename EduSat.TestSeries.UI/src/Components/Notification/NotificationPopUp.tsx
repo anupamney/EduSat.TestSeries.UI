@@ -16,35 +16,41 @@ import {
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { notify } from "../../service/notificationService";
+import { ISchoolDetails } from "../../Models/ISchoolDetails";
 
 interface EmailPopupProps {
   open: boolean;
   onClose: () => void;
-  emails: string[];
+  schools: ISchoolDetails[];
   type: string;
 }
 
 const EmailPopup: React.FC<EmailPopupProps> = ({
   open,
   onClose,
-  emails,
+  schools,
   type,
 }) => {
   //   const [template, setTemplate] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [attachment, setAttachment] = useState<File | null>(null);
+  let contacts: string[] = [];
+  if (type === "EmailService") {
+    contacts = schools.map((school) => school.teacherEmail);
+  } else if (type === "WhatsappService") {
+    contacts = schools.map((school) => school.teacherContact);
+  }
 
   const handleSend = () => {
-    // Logic to send the email
-    console.log({
-      //   template,
-      emails,
-      subject,
-      body,
-      attachment,
-    });
-    notify(emails, type, subject, body, attachment);
+    if (type === "EmailService") {
+      const emails = schools.map((school) => school.teacherEmail);
+      notify(emails, type, subject, body, attachment);
+    } else if (type === "WhatsappService") {
+      const emails = schools.map((school) => school.teacherContact);
+      notify(emails, type, subject, body, attachment);
+    }
+
     onClose();
   };
 
@@ -88,7 +94,7 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
           type="email"
           fullWidth
           margin="normal"
-          value={emails.join(", ")}
+          value={contacts.join(", ")}
           disabled
         />
         <TextField

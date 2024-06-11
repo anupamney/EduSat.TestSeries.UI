@@ -4,6 +4,7 @@ export interface ISchoolDetails {
   srn: number;
   teacherName: string;
   teacherEmail: string;
+  teacherContact: string;
   totalStudents: number;
   totalPayment: number;
   totalPaymentReceived: number;
