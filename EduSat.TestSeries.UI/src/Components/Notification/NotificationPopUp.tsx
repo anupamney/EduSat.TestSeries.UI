@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -12,11 +12,16 @@ import {
   //   FormControl,
   Typography,
   IconButton,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { notify } from "../../service/notificationService";
 import { ISchoolDetails } from "../../Models/ISchoolDetails";
+import { templateText } from "../../utils/constants";
 
 interface EmailPopupProps {
   open: boolean;
@@ -35,6 +40,7 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
   const [subject, setSubject] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [attachment, setAttachment] = useState<File | null>(null);
+  const [template, setTemplate] = useState<string>("text");
   let contacts: string[] = [];
   if (type === "EmailService") {
     contacts = schools.map((school) => school.teacherEmail);
@@ -62,6 +68,11 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
     }
   };
 
+  useEffect(() => {
+    setSubject(templateText[template].subject);
+    setBody(templateText[template].body);
+  }, [template]);
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>
@@ -79,16 +90,18 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
         </div>
       </DialogTitle>
       <DialogContent>
-        {/* <FormControl fullWidth margin="normal">
+        <FormControl fullWidth margin="normal">
           <InputLabel>Choose Template</InputLabel>
           <Select
             value={template}
             onChange={(e) => setTemplate(e.target.value as string)}
           >
+            <MenuItem value="text">Text msg</MenuItem>
             <MenuItem value="invoice">Invoice Link + Text msg</MenuItem>
             <MenuItem value="receipt">Payment Receipt + Text msg</MenuItem>
           </Select>
-        </FormControl> */}
+        </FormControl>
+
         <TextField
           label="To"
           type="email"
@@ -107,7 +120,7 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
         <TextField
           label="Your body text goes here"
           multiline
-          rows={4}
+          rows={10}
           fullWidth
           margin="normal"
           value={body}
