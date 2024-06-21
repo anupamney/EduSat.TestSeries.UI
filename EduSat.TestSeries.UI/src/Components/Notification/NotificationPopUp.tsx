@@ -26,14 +26,14 @@ import { templateText } from "../../utils/constants";
 interface EmailPopupProps {
   open: boolean;
   onClose: () => void;
-  schools: ISchoolDetails[];
+  selectedSchools: ISchoolDetails[];
   type: string;
 }
 
 const EmailPopup: React.FC<EmailPopupProps> = ({
   open,
   onClose,
-  schools,
+  selectedSchools,
   type,
 }) => {
   //   const [template, setTemplate] = useState<string>("");
@@ -43,18 +43,20 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
   const [template, setTemplate] = useState<string>("text");
   let contacts: string[] = [];
   if (type === "EmailService") {
-    contacts = schools.map((school) => school.teacherEmail);
+    contacts = selectedSchools.map((school) => school.teacherEmail);
   } else if (type === "WhatsappService") {
-    contacts = schools.map((school) => school.teacherContact);
+    contacts = selectedSchools.map((school) => school.teacherContact);
   }
 
   const handleSend = () => {
     if (type === "EmailService") {
-      const emails = schools.map((school) => school.teacherEmail);
-      notify(emails, type, subject, body, attachment);
+      const emails = selectedSchools.map((school) => school.teacherEmail);
+      const srns = selectedSchools.map((school) => String(school.srn));
+      notify(emails, srns, type, subject, body, attachment);
     } else if (type === "WhatsappService") {
-      const emails = schools.map((school) => school.teacherContact);
-      notify(emails, type, subject, body, attachment);
+      const emails = selectedSchools.map((school) => school.teacherContact);
+      const srns = selectedSchools.map((school) => String(school.srn));
+      notify(emails, srns, type, subject, body, attachment);
     }
 
     onClose();

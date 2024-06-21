@@ -291,9 +291,13 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
           }}
           onRowSelectionModelChange={(newSelection) => {
             setSelectedSchools(
-              newSelection.map(
-                (idx: GridRowId) => filteredData[(idx as number) - 1]
-              )
+              newSelection
+                .map((idx: GridRowId) =>
+                  filteredData.find((_) => _.id === Number(idx))
+                )
+                .filter(
+                  (school): school is ISchoolDetails => school !== undefined
+                )
             );
           }}
           pageSizeOptions={[15]}
@@ -304,7 +308,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
       <NotificationPopUp
         open={notiOpen}
         onClose={onNotiClose}
-        schools={selectedSchools}
+        selectedSchools={selectedSchools}
         type={notiType}
       />
     </div>

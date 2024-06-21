@@ -22,6 +22,7 @@ export const fetchAuthToken = async () => {
 };
 export const notify = async (
   emails: string[],
+  srns: string[],
   action: string,
   subject: string,
   body: string,
@@ -33,8 +34,11 @@ export const notify = async (
   }
 
   const formData = new FormData();
-  emails.forEach((email) => {
+  emails.forEach((email: string) => {
     formData.append("Recipients", email);
+  });
+  srns.forEach((srn: string) => {
+    formData.append("SRNs", srn);
   });
   formData.append("Subject", subject);
   formData.append("Body", body);
