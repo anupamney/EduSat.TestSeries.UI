@@ -2,7 +2,8 @@ export interface ISchoolDetails {
   id: number;
   schoolName: string;
   srn: number;
-  teacherName: string;
+  teacherFirstName: string;
+  teacherLastName: string;
   teacherEmail: string;
   teacherContact: string;
   totalStudents: number;

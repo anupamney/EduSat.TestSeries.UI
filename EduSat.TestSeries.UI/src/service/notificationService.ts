@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 
 import { baseURL } from "../utils/constants";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
+import { ISchoolDetails } from "../Models/ISchoolDetails";
 
 export const setDefaultHeaders = (token: string | null | undefined) => {
   axios.defaults.headers["Authorization"] = "Bearer " + token;
@@ -21,25 +22,15 @@ export const fetchAuthToken = async () => {
   }
 };
 export const notify = async (
-  emails: string[],
-  srns: string[],
+  selectedSchools: ISchoolDetails[],
   action: string,
   subject: string,
   body: string,
   attachment: File | null
 ) => {
-  if (emails.length === 0) {
-    alert("Please select a school to notify");
-    return;
-  }
-
   const formData = new FormData();
-  emails.forEach((email: string) => {
-    formData.append("Recipients", email);
-  });
-  srns.forEach((srn: string) => {
-    formData.append("SRNs", srn);
-  });
+
+  formData.append("Recipients", JSON.stringify(selectedSchools));
   formData.append("Subject", subject);
   formData.append("Body", body);
   if (attachment) {

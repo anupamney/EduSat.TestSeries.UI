@@ -1,6 +1,6 @@
 import { TemplateTextType } from "./types";
 
-export const baseURL = "https://localhost:32774/api/";
+export const baseURL = "https://localhost:32770/api/";
 
 export const templateText: TemplateTextType = {
   text: {

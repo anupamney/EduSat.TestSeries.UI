@@ -109,7 +109,8 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
         (item) =>
           item.schoolName.toLowerCase().includes(search.toLowerCase()) ||
           item.srn.toString().includes(search) ||
-          item.teacherName.toLowerCase().includes(search.toLowerCase())
+          item.teacherFirstName.toLowerCase().includes(search.toLowerCase()) ||
+          item.teacherLastName.toLowerCase().includes(search.toLowerCase())
       );
     }
 

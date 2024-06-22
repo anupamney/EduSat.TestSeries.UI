@@ -49,15 +49,17 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
   }
 
   const handleSend = () => {
-    if (type === "EmailService") {
-      const emails = selectedSchools.map((school) => school.teacherEmail);
-      const srns = selectedSchools.map((school) => String(school.srn));
-      notify(emails, srns, type, subject, body, attachment);
-    } else if (type === "WhatsappService") {
-      const emails = selectedSchools.map((school) => school.teacherContact);
-      const srns = selectedSchools.map((school) => String(school.srn));
-      notify(emails, srns, type, subject, body, attachment);
-    }
+    console.log(selectedSchools);
+
+    notify(selectedSchools, type, subject, body, attachment);
+    // if (type === "EmailService") {
+    //   const emails = selectedSchools.map((school) => school.teacherEmail);
+    //   const srns = selectedSchools.map((school) => String(school.srn));
+    // } else if (type === "WhatsappService") {
+    //   const emails = selectedSchools.map((school) => school.teacherContact);
+    //   const srns = selectedSchools.map((school) => String(school.srn));
+    //   notify(emails, srns, type, subject, body, attachment);
+    // }
 
     onClose();
   };
