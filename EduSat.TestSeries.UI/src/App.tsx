@@ -17,7 +17,7 @@ const App: React.FC = () => {
     const currURL = window.location.pathname;
     if (isLoggedIn()) {
       if (currURL === "/" || currURL === "/login" || currURL === "/register") {
-        navigate("/dashboard");
+        navigate("/schools");
       } else navigate(currURL);
     } else navigate(currURL);
   }, [navigate]);

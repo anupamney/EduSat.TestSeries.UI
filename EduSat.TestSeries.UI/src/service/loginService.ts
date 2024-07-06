@@ -24,6 +24,9 @@ export const login = async (email: string, password: string) => {
     return response;
   } catch (error) {
     const axiosError = error as AxiosError;
+    if (axiosError.message.includes("Network Error"))
+      enqueueSnackbar("network error", { variant: "error" });
+
     axiosError?.response?.data?.errors?.map((error: string) => {
       enqueueSnackbar(error, { variant: "error" });
     });

@@ -33,7 +33,7 @@ const SigninPage: React.FC = () => {
 
     const response = await login(email, password);
     if (response?.data.success) {
-      navigate("/dashboard");
+      navigate("/schools");
       setIsLoggedIn(true);
       window.localStorage.setItem("isLoggedIn", "true");
     }

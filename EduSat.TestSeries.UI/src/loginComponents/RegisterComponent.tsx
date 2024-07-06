@@ -9,7 +9,7 @@ const LoginComponent: React.FC = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = React.useContext(DataContext);
   if (isLoggedIn) {
-    navigate("/dashboard");
+    navigate("/schools");
   }
   return (
     <MainLayout>

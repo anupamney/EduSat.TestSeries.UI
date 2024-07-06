@@ -22,8 +22,13 @@ const columns: GridColDef<ISchoolDetails>[] = [
     width: 90,
   },
   {
-    field: "teacherName",
-    headerName: "Teacher Name",
+    field: "teacherFirstName",
+    headerName: "Teacher First Name",
+    width: 150,
+  },
+  {
+    field: "teacherLastName",
+    headerName: "Teacher Last Name",
     width: 150,
   },
   {
