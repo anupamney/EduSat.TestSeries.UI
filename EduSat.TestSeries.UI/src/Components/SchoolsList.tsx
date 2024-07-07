@@ -262,15 +262,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
             >
               Send Email
             </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setNotiType("MessageService");
-                setNotiOpen(true);
-                handleClose();
-              }}
-            >
-              Send Message
-            </MenuItem>
+
             <MenuItem
               onClick={() => {
                 setNotiType("WhatsappService");
