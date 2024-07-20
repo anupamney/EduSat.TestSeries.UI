@@ -1,6 +1,12 @@
-import { Box, Button, colors, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  colors,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import CustomInput from "./CustomInput";
 import { register } from "../service/loginService";
@@ -16,8 +22,10 @@ const SignupPage: React.FC = () => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const { setIsLoggedIn } = React.useContext(DataContext);
+  const [loading, setLoading] = useState(false);
 
   const tryRegister = async (e: FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     let errorflag = false;
     if (password !== confirmPassword) {
@@ -33,6 +41,7 @@ const SignupPage: React.FC = () => {
       errorflag = true;
     }
     if (errorflag) {
+      setLoading(false);
       return;
     }
 
@@ -41,6 +50,8 @@ const SignupPage: React.FC = () => {
       navigate("/dashboard");
       setIsLoggedIn(true);
       window.localStorage.setItem("isLoggedIn", "true");
+    } else {
+      setLoading(false);
     }
   };
 
@@ -97,7 +108,7 @@ const SignupPage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" fontWeight="bold" color="white">
-                  EduSat Test Series
+                  Edusat Test Series
                 </Typography>
               </Box>
 
@@ -174,14 +185,21 @@ const SignupPage: React.FC = () => {
                 Already have an account?
               </Button>
             </Box>
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{ mt: 4, boxShadow: `0 0 20px ${colors.green[500]}` }}
-            >
-              Register
-            </Button>
+            {loading && (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CircularProgress />
+              </div>
+            )}
+            {!loading && (
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 4, boxShadow: `0 0 20px ${colors.green[500]}` }}
+              >
+                Register
+              </Button>
+            )}
           </Box>
         </Box>
       </Grid>

@@ -1,10 +1,17 @@
-import { FormControl, FormLabel, TextField, Button } from "@mui/material";
+import {
+  FormControl,
+  FormLabel,
+  TextField,
+  Button,
+  FormControlLabel,
+  FormGroup,
+  Checkbox,
+} from "@mui/material";
 import { ITeacher } from "../Models/ITeacher";
 import { addTeacher } from "../service/dataService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-// import { AxiosResponse } from "axios";
 
 const AddTeachers: React.FC = () => {
   const navigate = useNavigate();
@@ -17,22 +24,9 @@ const AddTeachers: React.FC = () => {
     email: "",
   });
 
-  // const [teachers, setTeachers] = useState([] as ITeacher[]);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTeacher({ ...teacher, [event.target.name]: event.target.value });
   };
-
-  // const handleSelectChange = (event: SelectChangeEvent) => {
-  //   setTeacher({ ...teacher, [event.target.name]: event.target.value });
-  // };
-
-  // const fetchteachers = async () => {
-  //   const response = await getTeachers();
-  //   if (response) {
-  //     const teachers: ITeacher[] = response.data;
-  //     setTeachers(teachers);
-  //   }
-  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,20 +41,6 @@ const AddTeachers: React.FC = () => {
   };
   return (
     <div>
-      {/* <Button onClick={fetchteachers} disabled={teachers.length > 0}>
-        Get the list of registered teachers
-      </Button>
-      <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="teacher">Teachers</InputLabel>
-        <Select name="id" onChange={handleSelectChange} value={teacher.id}>
-          {teachers.map((teacher) => (
-            <MenuItem key={teacher.id} value={teacher.id}>
-              {teacher.firstName} {teacher.lastName}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl> */}
-
       <form onSubmit={handleSubmit}>
         <h2>Add Teacher</h2>
         <FormControl fullWidth margin="normal">
@@ -95,7 +75,7 @@ const AddTeachers: React.FC = () => {
             name="mobile"
             value={teacher.mobile}
             onChange={handleChange}
-            type="number" // Set input type for phone numbers
+            type="number"
           />
         </FormControl>
 
@@ -111,6 +91,13 @@ const AddTeachers: React.FC = () => {
             required
           />
         </FormControl>
+        <FormGroup>
+          <FormControlLabel
+            required
+            control={<Checkbox />}
+            label="Is Principal"
+          />
+        </FormGroup>
 
         <Button type="submit" variant="contained" color="primary">
           Add Teacher
