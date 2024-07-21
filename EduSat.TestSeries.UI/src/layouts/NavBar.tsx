@@ -9,8 +9,8 @@ interface NavLink {
 }
 
 const navbarLinks: NavLink[] = [
-  { label: "Add School", path: "/add-school" },
-  { label: "HOME", path: "/" },
+  { label: "ADD SCHOOL", path: "/add-school" },
+  { label: "ADD TEACHER", path: "/add-teachers" },
   { label: "SCHOOL LIST", path: "/schools" },
   { label: "NOTIFICATIONS", path: "/notifications" },
   { label: "MY PROFILE", path: "/profile" },

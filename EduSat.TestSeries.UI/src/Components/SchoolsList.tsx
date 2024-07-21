@@ -32,8 +32,18 @@ const columns: GridColDef<ISchoolDetails>[] = [
     width: 150,
   },
   {
+    field: "teacherContact",
+    headerName: "Teacher Mobile",
+    width: 150,
+  },
+  {
     field: "teacherEmail",
     headerName: "Teacher Email",
+    width: 250,
+  },
+  {
+    field: "isPrincipal",
+    headerName: "Principal",
     width: 150,
   },
   {
@@ -44,17 +54,17 @@ const columns: GridColDef<ISchoolDetails>[] = [
   {
     field: "totalPayment",
     headerName: "Total Payment",
-    width: 250,
+    width: 150,
   },
   {
     field: "totalPaymentReceived",
     headerName: "Total Payment Received",
-    width: 250,
+    width: 150,
   },
   {
     field: "paymentStatus",
     headerName: "Payment Status",
-    width: 250,
+    width: 150,
   },
   {
     field: "academicYear",
@@ -79,6 +89,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
   const [academicYear, setAcademicYear] = useState("All");
   const [paymentStatus, setPaymentStatus] = useState("All");
   const [classname, setClassname] = useState("All");
+  const [isPrincipal, setIsPrincipal] = useState("All");
   const [selectedSchools, setSelectedSchools] = useState<ISchoolDetails[]>([]);
   const [notiOpen, setNotiOpen] = useState(false);
   const [notiType, setNotiType] = useState<string>("");
@@ -95,7 +106,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
   };
   useEffect(() => {
     handleFilter();
-  }, [search, district, academicYear, paymentStatus, classname]);
+  }, [search, district, academicYear, paymentStatus, classname, isPrincipal]);
 
   const uniqueDistricts = Array.from(
     new Set(schoolList.map((school) => school.district))
@@ -137,6 +148,12 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
     // Apply class filter
     if (classname !== "All") {
       updatedData = updatedData.filter((item) => item.className === classname);
+    }
+
+    // Apply isPrincipal filter
+    if (isPrincipal !== "All") {
+      const status = isPrincipal === "true";
+      updatedData = updatedData.filter((item) => item.isPrincipal === status);
     }
 
     setFilteredData(updatedData);
@@ -230,6 +247,20 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
             <MenuItem value="All">All</MenuItem>
             <MenuItem value="Paid">Paid</MenuItem>
             <MenuItem value="Unpaid">Unpaid</MenuItem>
+          </Select>
+        </div>
+        <div>
+          <InputLabel id="paymentStatus">Is Principal</InputLabel>
+          <Select
+            value={isPrincipal}
+            onChange={(e) => {
+              setIsPrincipal(e.target.value as string);
+            }}
+            style={{ width: "120px" }}
+          >
+            <MenuItem value="All">All</MenuItem>
+            <MenuItem value="true">Yes</MenuItem>
+            <MenuItem value="false">No</MenuItem>
           </Select>
         </div>
         <div style={{ alignSelf: "center" }}>

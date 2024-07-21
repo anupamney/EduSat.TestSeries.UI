@@ -4,4 +4,5 @@ export interface ITeacher {
   lastName: string;
   email: string;
   mobile: string;
+  isPrincipal: number;
 }

@@ -13,4 +13,5 @@ export interface ISchoolDetails {
   academicYear: string;
   district: string;
   className: string;
+  isPrincipal: boolean;
 }

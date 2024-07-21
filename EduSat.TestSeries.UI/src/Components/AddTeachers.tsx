@@ -22,6 +22,7 @@ const AddTeachers: React.FC = () => {
     lastName: "",
     mobile: "",
     email: "",
+    isPrincipal: 0,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,6 +97,11 @@ const AddTeachers: React.FC = () => {
             required
             control={<Checkbox />}
             label="Is Principal"
+            checked={teacher.isPrincipal === 1}
+            onChange={(e) => {
+              const target = e.target as HTMLInputElement;
+              setTeacher({ ...teacher, isPrincipal: target.checked ? 1 : 0 });
+            }}
           />
         </FormGroup>
 
