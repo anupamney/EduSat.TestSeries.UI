@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addSchool } from "../service/dataService";
 import { ISchool } from "../Models/ISchool";
 import { useNavigate } from "react-router-dom";
-import { FormControl, TextField, Button } from "@mui/material";
+import {
+  FormControl,
+  TextField,
+  Button,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { useSnackbar } from "notistack";
+import { districts, Taluka } from "../assets/Districts/Districts";
 
 const AddSchool: React.FC = () => {
   const navigate = useNavigate();
@@ -14,15 +23,34 @@ const AddSchool: React.FC = () => {
     addressLine1: "",
     addressLine2: "",
     city: "",
+    taluka: "",
     district: "",
-    state: "",
+    state: "Maharashtra",
     pin: "",
     email: "",
     staffId: "",
   });
 
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  const [talukas, setTalukas] = useState<Taluka[]>([]);
+
+  const districtNames = districts.sort((a, b) => a.name.localeCompare(b.name));
+
+  useEffect(() => {
+    const district = districts.find((d) => d.name === selectedDistrict);
+    if (district) {
+      setTalukas(district.talukas);
+    } else {
+      setTalukas([]);
+    }
+  }, [selectedDistrict, districts]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSchool({ ...school, [event.target.name]: event.target.value });
+  };
+
+  const handleChangeSelect = (e: SelectChangeEvent) => {
+    setSchool({ ...school, [e.target.name]: e.target.value as string });
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -80,15 +108,43 @@ const AddSchool: React.FC = () => {
       </FormControl>
 
       <FormControl fullWidth margin="normal">
-        <TextField
-          label="District"
-          id="district"
+        <InputLabel id="district-select-label">District</InputLabel>
+        <Select
+          labelId="district-select-label"
+          id="district-select"
           name="district"
           value={school.district}
-          onChange={handleChange}
-        />
+          onChange={(event) => {
+            handleChangeSelect(event);
+            setSelectedDistrict(event.target.value as string);
+          }}
+          label="District"
+        >
+          {districtNames.map((districtName) => (
+            <MenuItem key={districtName.name} value={districtName.name}>
+              {districtName.name}
+            </MenuItem>
+          ))}
+        </Select>
       </FormControl>
 
+      <FormControl fullWidth margin="normal" disabled={!selectedDistrict}>
+        <InputLabel id="taluka-select-label">Taluka</InputLabel>
+        <Select
+          labelId="taluka-select-label"
+          id="taluka-select"
+          name="taluka"
+          value={school.taluka}
+          onChange={handleChangeSelect}
+          label="Taluka"
+        >
+          {talukas.map((taluka) => (
+            <MenuItem key={taluka.name} value={taluka.name}>
+              {taluka.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <FormControl fullWidth margin="normal">
         <TextField
           label="State"

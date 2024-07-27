@@ -4,6 +4,7 @@ export interface ISchool {
   addressLine1: string;
   addressLine2: string;
   city: string;
+  taluka: string;
   district: string;
   state: string;
   pin: string;
