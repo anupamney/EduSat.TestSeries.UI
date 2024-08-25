@@ -14,4 +14,6 @@ export interface ISchoolDetails {
   district: string;
   className: string;
   isPrincipal: boolean;
+  discount_Percent: number;
+  discounted_Price: number;
 }

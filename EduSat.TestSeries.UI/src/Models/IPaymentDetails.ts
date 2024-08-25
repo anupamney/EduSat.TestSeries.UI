@@ -4,4 +4,6 @@ export interface IPaymentDetails {
   totalAmount: number;
   amountPaid: number;
   paymentStatus: boolean;
+  discountedPrice: number;
+  discountPercent: number;
 }

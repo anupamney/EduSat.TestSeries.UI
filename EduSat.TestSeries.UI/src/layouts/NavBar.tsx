@@ -12,7 +12,7 @@ const navbarLinks: NavLink[] = [
   { label: "ADD SCHOOL", path: "/add-school" },
   { label: "ADD TEACHER", path: "/add-teachers" },
   { label: "SCHOOL LIST", path: "/schools" },
-  { label: "NOTIFICATIONS", path: "/notifications" },
+  { label: "ADD SCHOLARSHIP", path: "/add-scholarship" },
   { label: "MY PROFILE", path: "/profile" },
   { label: "LOGOUT", path: "/" },
 ];

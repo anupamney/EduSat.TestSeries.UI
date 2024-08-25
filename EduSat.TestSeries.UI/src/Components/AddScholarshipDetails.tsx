@@ -25,6 +25,8 @@ const AddScholarshipDetails = () => {
     totalAmount: 0,
     amountPaid: 0,
     paymentStatus: false,
+    discountedPrice: 0,
+    discountPercent: 0,
   });
   const [scholarshipDetails, setScholarshipDetails] =
     useState<IScholarshipDetails>({
@@ -76,7 +78,7 @@ const AddScholarshipDetails = () => {
     e.preventDefault();
     const response = await addScholarshipDetails(scholarshipDetails);
     if (response && response.data) {
-      const success: string = response.data; // assuming the data you need is directly in response.data
+      const success: string = response.data;
       enqueueSnackbar("Scholarship details added successfully", {
         variant: "success",
       });
@@ -93,6 +95,8 @@ const AddScholarshipDetails = () => {
   };
   const handleSubmitAfter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(paymentDet);
+
     const success = addPaymentDetails(paymentDet);
     if (await success) {
       enqueueSnackbar("payment details added successfully", {
@@ -229,6 +233,33 @@ const AddScholarshipDetails = () => {
                     amountPaid: parseInt(e.target.value),
                   })
                 }
+              />
+            </FormControl>
+            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+              <TextField
+                required
+                id="outlined-disabled"
+                label="Discount Percentage"
+                defaultValue={paymentDet.discountPercent}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPaymentDetails((prev) => ({
+                    ...prev,
+                    discountPercent: parseInt(e.target.value),
+                    discountedPrice:
+                      paymentDet.totalAmount *
+                      (1 - parseInt(e.target.value) / 100),
+                  }));
+                }}
+              />
+            </FormControl>
+            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+              <TextField
+                required
+                id="outlined-disabled"
+                label="Discounted Price"
+                defaultValue={paymentDet.discountedPrice}
+                value={paymentDet.discountedPrice}
+                disabled
               />
             </FormControl>
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
