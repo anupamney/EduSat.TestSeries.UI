@@ -13,3 +13,5 @@ Landing page/Report:-
 Send Email or WhatsApp Notifications with Tags Auto-Populated at Runtime:- 
 
 ![image](https://github.com/user-attachments/assets/7814c952-1b56-486c-879c-f3db5921a773)
+
+![image](https://github.com/user-attachments/assets/b872b9b8-da0e-4005-84e6-af8acc1ab2ec)
