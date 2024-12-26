@@ -62,7 +62,7 @@ const QuestionPage: React.FC = () => {
             {/* LOGO END */}
 
             {/* <Typography color="white" fontWeight="bold" sx={{ textAlign: 'center', marginTop: 4,  marginBottom: 0}} mt={7} mb={1}>
-            Simplifies connecting, augmenting your career
+            Effortless Practice, Guaranteed Success
 
             </Typography> */}
             {/* <Typography color="white" fontWeight="bold" sx={{ textAlign: 'center', margin: 0 }} mt={7} mb={3}>

@@ -9,11 +9,11 @@ const TitleBox: React.FC = () => {
           backgroundImage: `linear-gradient(135deg, rgba(0, 255, 60, 0.3) , rgba(0, 157, 255, 0.3))`,
           padding: "20px",
           display: {
-            xs: 'none',
-            sm: 'none',
-            md: 'flex',
-            lg: 'flex', 
-            xl: 'flex'
+            xs: "none",
+            sm: "none",
+            md: "flex",
+            lg: "flex",
+            xl: "flex",
           },
           flexDirection: "column",
           justifyContent: "center",
@@ -32,7 +32,8 @@ const TitleBox: React.FC = () => {
             Join Our <br /> Community
           </Typography>
           <Typography variant="body1" fontWeight="" color="whitesmoke">
-            Create Your High-Level Cloud Network Service!
+            Effortless Exam Prep: Streamline, Manage, and <br />
+            Track Practice Paper Orders for Schools
           </Typography>
         </Box>
       </Box>

@@ -119,7 +119,7 @@ const SignupPage: React.FC = () => {
                 mt={7}
                 mb={1}
               >
-                Simplifies connecting, augmenting your career
+                Effortless Practice, Guaranteed Success
               </Typography>
               <Typography
                 color="white"
