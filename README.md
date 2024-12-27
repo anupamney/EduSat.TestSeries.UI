@@ -1,17 +1,30 @@
-Login Screen:- 
+# React + TypeScript + Vite
 
-![image](https://github.com/user-attachments/assets/45d53934-2447-4bc7-9f29-a4e449af8431)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Register Screen:- 
+Currently, two official plugins are available:
 
-![image](https://github.com/user-attachments/assets/9a43835c-0bb6-4ca7-a2ef-0c9f1e8ac110)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Landing page/Report:- 
+## Expanding the ESLint configuration
 
-![image](https://github.com/user-attachments/assets/d2301bf9-26ae-4063-9cde-ccbe365dde77)
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-Send Email or WhatsApp Notifications with Tags Auto-Populated at Runtime:- 
+- Configure the top-level `parserOptions` property like this:
 
-![image](https://github.com/user-attachments/assets/7814c952-1b56-486c-879c-f3db5921a773)
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
+```
 
-![image](https://github.com/user-attachments/assets/b872b9b8-da0e-4005-84e6-af8acc1ab2ec)
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
