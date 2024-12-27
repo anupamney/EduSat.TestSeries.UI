@@ -44,7 +44,7 @@ const EmailPopup: React.FC<EmailPopupProps> = ({
   let contacts: string[] = [];
   if (type === "EmailService") {
     contacts = selectedSchools.map((school) => school.teacherEmail);
-  } else if (type === "WhatsappService") {
+  } else if (type === "SMSService") {
     contacts = selectedSchools.map((school) => school.teacherContact);
   }
 

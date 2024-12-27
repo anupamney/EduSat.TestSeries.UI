@@ -11,6 +11,8 @@ import {
 import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
 import { ISchoolDetails } from "../Models/ISchoolDetails";
 import NotificationPopUp from "./Notification/NotificationPopUp";
+import axios from "axios";
+import { baseURL } from "../utils/constants";
 interface SchoolListProps {
   schoolList: ISchoolDetails[];
 }
@@ -159,6 +161,30 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
     setFilteredData(updatedData);
   };
 
+  const downloadExcel = async () => {
+    try {
+      const response = await axios.get(`${baseURL}export/excel`, {
+        responseType: "blob", // Ensure the response is handled as a binary object
+      });
+
+      // Create a URL for the blob
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a temporary link and trigger download
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `SchoolDetails-${Date.now()}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Failed to download Excel file", error);
+    }
+  };
+
   return (
     <div style={{ margin: "16px" }}>
       <div
@@ -296,12 +322,20 @@ const SchoolList: React.FC<SchoolListProps> = ({ schoolList }) => {
 
             <MenuItem
               onClick={() => {
-                setNotiType("WhatsappService");
+                setNotiType("SMSService");
                 setNotiOpen(true);
                 handleClose();
               }}
             >
-              Send Whatsapp
+              Send SMS
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                downloadExcel();
+                handleClose();
+              }}
+            >
+              Export to Excel
             </MenuItem>
           </Menu>
         </div>
