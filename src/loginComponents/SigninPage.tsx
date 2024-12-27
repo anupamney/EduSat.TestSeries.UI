@@ -66,9 +66,9 @@ const SigninPage: React.FC = () => {
           boxShadow: {
             xs: "",
             sm: "",
-            md: "15px 2px 5px -5px",
-            lg: "15px 2px 5px -5px",
-            xl: "15px 2px 5px -5px",
+            md: "15px 2px 5px -14px",
+            lg: "15px 2px 5px -14px",
+            xl: "15px 2px 5px -14px",
           },
         }}
       >

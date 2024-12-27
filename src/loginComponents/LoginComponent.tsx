@@ -18,7 +18,11 @@ const LoginComponent: React.FC = () => {
           },
         }}
       >
-        <Grid container height="90vh">
+        <Grid
+          container
+          height="90vh"
+          style={{ flexFlow: "nowrap", justifyContent: "center" }}
+        >
           <SigninPage />
 
           <TitleBox />
