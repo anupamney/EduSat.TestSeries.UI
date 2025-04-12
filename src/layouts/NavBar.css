@@ -2,31 +2,64 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #242424; /* Adjust background color as needed */
-  color: #fff; /* Adjust text color as needed */
+  padding: 0 16px;
+  background-color: rgba(18, 18, 24, 0.98);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  height: 64px;
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
 }
 
 .navbar-logo {
-  height: 75px;
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+  margin-right: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+  border-color: rgba(45, 206, 101, 0.3);
 }
 
 .navbar-header {
   display: flex;
   align-items: center;
-  width: 20vw;
-  justify-content: space-around;
-  font-size: 1.2rem;
-  font-weight: bold;
+  width: auto;
+  justify-content: flex-start;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
   text-decoration: none;
   color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.navbar-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .nav-menu {
@@ -34,21 +67,117 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  gap: 8px;
+  height: 100%;
+  align-items: center;
 }
 
 .nav-item {
-  margin: 0 10px;
+  margin: 0;
+  position: relative;
+  height: 100%;
 }
 
 .nav-links {
-  color: inherit;
+  color: #ffffff;
   text-decoration: none;
-  font-size: 1rem;
-  transition: all 0.3s ease-in-out;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  letter-spacing: 0.5px;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .nav-links:hover {
-  color: #00ffff; /* Adjust hover color as needed */
+  background-color: rgba(45, 206, 101, 0.2);
+  color: #2dce65;
+}
+
+.nav-links:active {
+  transform: translateY(1px);
+}
+
+/* Active link style */
+.nav-links.active {
+  background-color: #2dce65;
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(45, 206, 101, 0.3);
+}
+
+/* Actions button style */
+.action-btn {
+  background-color: rgba(32, 150, 237, 0.1) !important;
+}
+
+.action-btn:hover {
+  background-color: rgba(32, 150, 237, 0.2) !important;
+  color: #2096ed !important;
+}
+
+/* Mobile menu button */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 1.5rem;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1024px) {
+  .navbar-header {
+    font-size: 1.1rem;
+  }
+  
+  .nav-links {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 64px;
+    right: -100%;
+    flex-direction: column;
+    background-color: rgba(18, 18, 24, 0.98);
+    backdrop-filter: blur(10px);
+    width: 250px;
+    height: calc(100vh - 64px);
+    padding: 16px;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+    gap: 12px;
+    align-items: flex-start;
+    z-index: 999;
+  }
+  
+  .nav-menu.active {
+    right: 0;
+  }
+  
+  .nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    height: 40px;
+  }
+  
+  .navbar-title {
+    max-width: 150px;
+  }
 }
 
 /* Add School Button styling (optional) */

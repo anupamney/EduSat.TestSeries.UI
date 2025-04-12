@@ -2,9 +2,185 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: roboto, 'sans-serif';
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
-body{
-  height: 100vh;
+:root {
+  --primary: #2dce65;
+  --primary-light: #81e2a3;
+  --primary-dark: #1b7c3d;
+  --secondary: #2096ed;
+  --background-dark: #121212;
+  --background-light: #1e1e30;
+  --text-light: #ffffff;
+  --text-secondary: #cccccc;
 }
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--background-dark);
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Application root container */
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Better text readability */
+p, span, div, button, a, input, textarea, select, label {
+  color: var(--text-light);
+}
+
+input, textarea, select {
+  color: var(--text-light) !important;
+  background-color: rgba(30, 30, 48, 0.7) !important;
+}
+
+/* Data Grid and Tables Styling */
+.MuiDataGrid-root {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.MuiDataGrid-cell {
+  color: var(--text-light) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.MuiDataGrid-columnHeader,
+.MuiDataGrid-columnHeaders {
+  background-color: rgba(45, 206, 101, 0.2) !important;
+  color: var(--text-light) !important;
+  font-weight: bold !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.MuiDataGrid-footerContainer {
+  background-color: rgba(30, 30, 48, 0.9) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.MuiDataGrid-virtualScroller {
+  background-color: rgba(30, 30, 48, 0.7) !important;
+}
+
+.MuiTablePagination-root {
+  color: var(--text-light) !important;
+}
+
+.MuiDataGrid-row:hover {
+  background-color: rgba(45, 206, 101, 0.08) !important;
+}
+
+.MuiDataGrid-row.Mui-selected {
+  background-color: rgba(45, 206, 101, 0.16) !important;
+}
+
+.MuiDataGrid-row.Mui-selected:hover {
+  background-color: rgba(45, 206, 101, 0.24) !important;
+}
+
+.MuiDataGrid-row:nth-of-type(even) {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Material UI Override Styles */
+.MuiPaper-root {
+  background-color: var(--background-light) !important;
+  color: var(--text-light) !important;
+}
+
+.MuiMenuItem-root {
+  color: var(--text-light) !important;
+}
+
+.MuiSelect-icon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.MuiInputBase-input {
+  color: var(--text-light) !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.23) !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary) !important;
+}
+
+.MuiInputLabel-root {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: var(--primary) !important;
+}
+
+.MuiCheckbox-root {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.MuiButton-root {
+  text-transform: none !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better focus styles for accessibility */
+:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Container for forms */
+.form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--background-light);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Page title styles */
+.page-title {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: var(--text-light);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+/* Form field labels */
+label {
+  color: var(--text-secondary) !important;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Responsive spacing utilities */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }

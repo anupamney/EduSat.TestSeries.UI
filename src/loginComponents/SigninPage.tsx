@@ -4,6 +4,9 @@ import {
   CircularProgress,
   colors,
   Typography,
+  Paper,
+  Avatar,
+  Container,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import React, { FormEvent, useState } from "react";
@@ -13,6 +16,7 @@ import { login } from "../service/loginService";
 import { DataContext } from "../Contexts/DataContext";
 import { passwordValidator, emailValidator } from "../utils/inputValidations";
 import { useSnackbar } from "notistack";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const SigninPage: React.FC = () => {
   const navigate = useNavigate();
@@ -74,68 +78,74 @@ const SigninPage: React.FC = () => {
       >
         <Box
           sx={{
-            backgroundColor: "rgba(0, 24, 57, 0.2)",
+            backgroundColor: "rgba(37, 35, 54, 0.8)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             height: "100%",
             borderRadius: {
-              xs: "30px",
-              sm: "30px",
-              md: "30px 0 0 30px",
-              lg: "30px 0 0 30px",
-              xl: "30px 0 0 30px",
+              xs: "20px",
+              sm: "20px",
+              md: "20px 0 0 20px",
+              lg: "20px 0 0 20px",
+              xl: "20px 0 0 20px",
             },
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+            backdropFilter: "blur(10px)",
+            padding: "40px 30px",
           }}
         >
-          <Box width="50%">
-            <Box display="flex" flexDirection="column" alignItems="center">
-              <Box
-                sx={{
-                  mt: "60px",
-                  width: "250px",
-                  height: "50px",
-                  bgcolor: "primary.main",
-                  borderRadius: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: `0 0 20px ${colors.green[500]}`,
-                }}
-              >
-                <Typography variant="h6" fontWeight="bold" color="white">
-                  Edusat Test Series
-                </Typography>
-              </Box>
+          <Box
+            sx={{
+              mb: 4,
+              width: "80px",
+              height: "80px",
+              bgcolor: "primary.main",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: `0 0 20px ${colors.green[500]}`,
+            }}
+          >
+            <LockOutlinedIcon sx={{ fontSize: 40, color: "white" }} />
+          </Box>
 
-              <Typography
-                color="white"
-                fontWeight="bold"
-                sx={{ textAlign: "center", marginTop: 4, marginBottom: 0 }}
-                mt={7}
-                mb={1}
-              >
-                Effortless Practice, Guaranteed Success
-              </Typography>
-              <Typography
-                color="white"
-                fontWeight="bold"
-                sx={{ textAlign: "center", margin: 0 }}
-                mt={7}
-                mb={3}
-              ></Typography>
-              <Typography
-                color="white"
-                fontWeight="bold"
-                sx={{ textAlign: "center", marginTop: 4 }}
-                mt={7}
-                mb={3}
-              >
-                Sign in to our Portal
-              </Typography>
-            </Box>
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              color: "white", 
+              fontWeight: "bold", 
+              mb: 1,
+              textAlign: "center" 
+            }}
+          >
+            Edusat Test Series
+          </Typography>
 
-            {/* INPUTS */}
+          <Typography
+            color="white"
+            variant="subtitle1"
+            sx={{ 
+              textAlign: "center",
+              mb: 4,
+              opacity: 0.8
+            }}
+          >
+            Effortless Practice, Guaranteed Success
+          </Typography>
+          
+          <Typography
+            color="white"
+            fontWeight="bold"
+            variant="h6"
+            sx={{ textAlign: "center", mb: 4 }}
+          >
+            Sign in to our Portal
+          </Typography>
+
+          {/* INPUTS */}
+          <Box width="100%" sx={{ mt: 2 }}>
             <CustomInput
               label="Email"
               placeholder="Enter your Email..."
@@ -150,51 +160,50 @@ const SigninPage: React.FC = () => {
               setShowPassword={setShowPassword}
               setData={setPassword}
             />
-            {/* <CustomInput
-            label="MFA Code"
-            placeholder="Enter your code..."
-            isIconActive={true}
-          /> */}
-            {/* INPUT END */}
 
             <Box
               display="flex"
               flexDirection="row"
-              justifyContent="space-between"
-              mt={2}
+              justifyContent="flex-end"
+              mt={3}
               width="100%"
               color="white"
             >
-              {/* <div style={{ display: "flex" }}>
-              <Checkbox disableRipple sx={{ p: 0, pr: 1 }} />
-              <Typography>Remember me</Typography>
-            </div> */}
               <Button
                 variant="text"
                 onClick={() => navigate("/register")}
                 style={{
-                  color: colors.green[500],
+                  color: colors.green[300],
                   textDecoration: "none",
+                  fontSize: "0.9rem",
                 }}
               >
                 New User? Register Here
               </Button>
             </Box>
-            {loading && (
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress />
-              </div>
-            )}
-            {!loading && (
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={{ mt: 4, boxShadow: `0 0 20px ${colors.green[500]}` }}
-              >
-                Login
-              </Button>
-            )}
+
+            <Box sx={{ mt: 4, width: "100%" }}>
+              {loading ? (
+                <Box display="flex" justifyContent="center">
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{ 
+                    py: 1.2,
+                    borderRadius: 2,
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    boxShadow: `0 0 20px ${colors.green[500]}` 
+                  }}
+                >
+                  Login
+                </Button>
+              )}
+            </Box>
           </Box>
         </Box>
       </Grid>
